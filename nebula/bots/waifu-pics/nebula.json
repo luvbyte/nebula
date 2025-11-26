@@ -1,0 +1,45 @@
+{
+  "title": "Waifu Pics",
+  "btype": "sbot",
+  "commands": {
+    "sfw": {
+      "help": "Generate sfw anime images",
+      "subcommands": {
+        "waifu": { "help": "Random waifu image" },
+        "neko": { "help": "Cute neko girl" },
+        "shinobu": { "help": "Shinobu-style image" },
+        "megumin": { "help": "Megumin-style image" },
+        "bully": { "help": "Bully (meme) image" },
+        "cuddle": { "help": "Cuddle / gentle hug" },
+        "cry": { "help": "Crying anime image" },
+        "hug": { "help": "Hug image" },
+        "awoo": { "help": "Awoo (cute howl) image" },
+        "kiss": { "help": "Kissing image" },
+        "lick": { "help": "Licking image" },
+        "pat": { "help": "Pat on the head image" },
+        "smug": { "help": "Smug face image" },
+        "bonk": { "help": "Bonk (comedic) image" },
+        "yeet": { "help": "Yeet (throw) image" },
+        "blush": { "help": "Blushing image" },
+        "smile": { "help": "Smiling image" },
+        "wave": { "help": "Waving image" },
+        "highfive": { "help": "High five image" },
+        "handhold": { "help": "Holding hands image" },
+        "nom": { "help": "Nom (eating) image" },
+        "bite": { "help": "Bite image" },
+        "glomp": { "help": "Glomp (excited tackle) image" },
+        "slap": { "help": "Slap image" },
+        "kill": { "help": "Kill (joke/meme) image" },
+        "kick": { "help": "Kick image" },
+        "happy": { "help": "Happy image" },
+        "wink": { "help": "Winking image" },
+        "poke": { "help": "Poke image" },
+        "dance": { "help": "Dancing image" },
+        "cringe": { "help": "Cringe reaction image" }
+      }
+    },
+    "random": {
+      "help": "Generate Random Image"
+    }
+  }
+}

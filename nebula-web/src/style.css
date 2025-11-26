@@ -1,0 +1,219 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in forwards;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .3s ease;
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.slide-up-enter-to,
+.slide-up-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all .3s ease;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+.slide-down-enter-to,
+.slide-down-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all .3s ease;
+}
+
+.slide-left-enter-from,
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.slide-left-enter-to,
+.slide-left-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all .3s ease;
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.slide-right-enter-to,
+.slide-right-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all .3s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.scale-enter-to,
+.scale-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+.scale-enter-active,
+.scale-leave-active {
+  transition: all .25s ease;
+}
+
+.rotate-enter-from,
+.rotate-leave-to {
+  opacity: 0;
+  transform: rotate(-15deg);
+}
+.rotate-enter-to,
+.rotate-leave-from {
+  opacity: 1;
+  transform: rotate(0);
+}
+.rotate-enter-active,
+.rotate-leave-active {
+  transition: all .3s ease-out;
+}
+
+.expand-enter-from,
+.expand-leave-to {
+  height: 0;
+  opacity: 0;
+}
+.expand-enter-to,
+.expand-leave-from {
+  height: auto;
+  opacity: 1;
+}
+.expand-enter-active,
+.expand-leave-active {
+  transition: all .3s ease;
+  overflow: hidden;
+}
+
+
+.bounce-enter-active {
+  animation: bounceIn .4s;
+}
+.bounce-leave-active {
+  animation: bounceOut .3s forwards;
+}
+@keyframes bounceIn {
+  0% { transform: scale(.8); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes bounceOut {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(.8); opacity: 0; }
+}
+
+.flip-enter-from,
+.flip-leave-to {
+  transform: rotateY(90deg);
+  opacity: 0;
+}
+.flip-enter-to,
+.flip-leave-from {
+  transform: rotateY(0);
+  opacity: 1;
+}
+.flip-enter-active,
+.flip-leave-active {
+  transition: all .4s ease;
+  transform-style: preserve-3d;
+}
+
+.blur-enter-from,
+.blur-leave-to {
+  opacity: 0;
+  filter: blur(6px);
+}
+.blur-enter-to,
+.blur-leave-from {
+  opacity: 1;
+  filter: blur(0);
+}
+.blur-enter-active,
+.blur-leave-active {
+  transition: all .25s ease;
+}
+
+.pop-enter-from,
+.pop-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.pop-enter-to,
+.pop-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+.pop-enter-active,
+.pop-leave-active {
+  transition: all .2s cubic-bezier(.18,.89,.32,1.28);
+}
+
+/* When element enters */
+.swap-enter-active,
+.swap-leave-active {
+  transition: all 0.2s ease;
+  position: absolute; /* prevents layout jumping */
+}
+
+/* Start of entering */
+.swap-enter-from {
+  opacity: 0;
+  transform: scale(0.8) rotate(-20deg);
+}
+
+/* End of leaving */
+.swap-leave-to {
+  opacity: 0;
+  transform: scale(0.8) rotate(20deg);
+}

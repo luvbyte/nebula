@@ -1,0 +1,5 @@
+{
+  "main": "curl -s https://api.waifu.im/search?is_nsfw=false | jq -r '.images[0].url'",
+  "response": "image",
+  "shell": true
+}
