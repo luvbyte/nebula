@@ -79,6 +79,19 @@
     <div v-if="botConfig.autocomplete">
       <InputCommands v-model="input" :commands="botConfig.autocomplete" />
     </div>
+    <!-- Attach options -->
+    <Transition name="slide-up">
+      <div
+        v-if="showInputOptions && botConfig.files"
+        class="relative w-full h-42 overflow-y-auto"
+      >
+        <InputOptionsPanel
+          ref="inputOptionsPanelRef"
+          :accept="botConfig.files?.accept"
+          :multiple="botConfig.files?.multiple"
+        />
+      </div>
+    </Transition>
 
     <div class="w-full bg-base-100 p-4 flex items-center gap-2">
       <!-- activating command autocomplete -->
@@ -101,21 +114,11 @@
         />
       </div>
 
-      <!--
-      <Icon
-        @click="toggleInputOptions"
-        icon="entypo:list"
-        width="28"
-        height="28"
-      />
-      -->
-
       <input
         id="search-input"
         type="text"
         v-model="input"
         @keyup.enter="send"
-        @click="showInputOptions = false"
         class="w-full p-2 input bg-transparent border-0 shadow-none focus:outline-none text-lg placeholder:opacity-40"
         placeholder="Message"
         autocomplete="off"
@@ -124,7 +127,13 @@
         spellcheck="false"
         inputmode="text"
       />
-      <div class="w-8">
+
+      <div class="flex items-center gap-2 h-8">
+        <!-- attach button -->
+        <button v-if="botConfig.files" @click="toggleInputOptions">
+          <Icon icon="tdesign:attach" width="24" height="24" />
+        </button>
+
         <Transition name="slide-left">
           <button v-if="input.trim().length > 0" @click="send">
             <Icon icon="majesticons:send-line" width="24" height="24" />
@@ -132,8 +141,6 @@
         </Transition>
       </div>
     </div>
-
-    <div v-if="showInputOptions" class="w-full h-72 bg-amber-100"></div>
   </div>
 </template>
 
@@ -159,6 +166,7 @@
   import ChatMenu from "@/components/ChatMenu.vue";
   import InputCommands from "@/components/InputCommands.vue";
   import BotProfile from "@/components/BotProfile.vue";
+  import InputOptionsPanel from "@/components/InputOptionsPanel.vue";
 
   import { Icon } from "@iconify/vue";
 
@@ -168,11 +176,15 @@
   const input = ref<string>("");
   const chatRef = ref<HTMLElement | null>(null);
 
+  const inputOptionsPanelRef = ref(null);
+
   const showInputOptions = ref(false);
 
+  // sendin status
+  const sendingMessage = ref(false);
+
   function toggleInputOptions() {
-    //
-    document.activeElement.blur();
+    // document.activeElement.blur();
     showInputOptions.value = !showInputOptions.value;
   }
 
@@ -190,10 +202,25 @@
   const showChatMenu = ref(false);
   const showBotProfile = ref(false);
 
-  function send() {
-    sendBotMessage(props.activeBot.name, input.value);
+  function safeGetFiles() {
+    return inputOptionsPanelRef.value?.getFiles?.() ?? [];
+  }
+
+  // send measage
+  async function send() {
+    if (sendingMessage.value) return;
+    sendingMessage.value = true;
+    // if files found
+    try {
+      await sendBotMessage(props.activeBot.name, input.value, safeGetFiles());
+    } catch (e) {
+      console.log(e);
+    }
+
+    showInputOptions.value = false;
 
     input.value = "";
+    sendingMessage.value = false;
   }
 
   function isAtBottom() {
@@ -274,7 +301,7 @@
   }
 
   function onMessage(payload) {
-    console.log(payload);
+    console.log("Receved Payload: ", payload);
     // catch message events
     if (payload.type === "event") {
       // catching events

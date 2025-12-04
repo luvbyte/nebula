@@ -5,6 +5,8 @@ import time
 
 from pathlib import Path
 
+from fastapi.concurrency import run_in_threadpool
+
 from fastapi import HTTPException
 
 def run_safely(func, *args, **kwargs):
@@ -14,7 +16,7 @@ def run_safely(func, *args, **kwargs):
   else:
     # sync/blocking function → run in threadpool
     return asyncio.create_task(
-      asyncio.run_in_threadpool(func, *args, **kwargs)
+      run_in_threadpool(func, *args, **kwargs)
     )
 
 

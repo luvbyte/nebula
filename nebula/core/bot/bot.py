@@ -13,6 +13,18 @@ from .mbot import ModuleBot
 from core.utils import generate_timestamp
 
 
+class Files:
+  def __init__(self, files):
+    # list of fastapi FILE 
+    self._files: list = files
+
+  # init before adding message 
+  async def init(self):
+    if self._files:
+      for file in self._files:
+        print(file.filename)
+
+
 # Bot Object
 class Bot:
   def __init__(self, name: str, path: Path, broadcast):
@@ -82,7 +94,7 @@ class Bot:
       return None
     
     # Log
-    print("Add message: ", self.name, message, is_self)
+    print(f"Add message: ({msg_type}) ", self.name, message, is_self)
     
     payload = {
       "id": self.generate_message_id(),
@@ -121,7 +133,10 @@ class Bot:
     await self.add_bot_message(message, False, msg_type)
 
   # Main function when message reveived
-  async def _on_command(self, command: str):
+  async def _on_command(self, command: str, files):
+    files = await Files(files).init()
+
+    # implement files footer in ui bubble later
     await self.add_bot_message(command, True)
     
     # waiting for sending self message
@@ -129,7 +144,7 @@ class Bot:
     
     # Should return None if error
     try:
-      return await self.core.on_command(command)
+      return await self.core.on_command(command, files)
     except Exception as e:
       raise e # for debug 
       print("Got Error: ", e)
@@ -138,6 +153,7 @@ class Bot:
   def get_config(self):
     return {
       "autocomplete": self.config_dict["commands"],
+      "files": self.config_dict["files"],
       # Static for now
       "background": "http://localhost:8000/static/background.jpg"
     }

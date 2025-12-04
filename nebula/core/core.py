@@ -118,8 +118,8 @@ class Nebula:
   def _on_task_complete(self, task):
     self.tasks.discard(task)
     
-  async def run(self, name: str, command: str):
-    coro = self.get_bot(name)._on_command(command)
+  async def run(self, name: str, command: str, files):
+    coro = self.get_bot(name)._on_command(command, files)
     task = asyncio.create_task(coro)
     self.tasks.add(task)
     task.add_done_callback(self._on_task_complete)

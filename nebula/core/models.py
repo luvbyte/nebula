@@ -13,6 +13,10 @@ class CommandGroup(BaseModel):
 
 Commands = Optional[Dict[str, CommandGroup]]
 
+class Files(BaseModel):
+  accept: str = "*/*"  # accept all files
+  multiple: bool = False
+
 class BotConfig(BaseModel):
   # Title 
   title: Optional[str] = Field(None, description="Bot title name")
@@ -22,4 +26,6 @@ class BotConfig(BaseModel):
 
   # bot commands / autocomplete / suggestions
   commands: Commands = Field(None)
+  
+  files: Optional[Files] = None
 

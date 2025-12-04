@@ -115,7 +115,7 @@ class SimpleBot:
   def __task_done(self):
     pass
 
-  async def on_command(self, command: str):
+  async def on_command(self, command: str, files):
     split_command = shlex.split(command.strip())
     if not split_command:
       return None

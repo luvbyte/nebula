@@ -70,7 +70,7 @@ async function getBotsList() {
   return await res.json();
 }
 
-async function sendBotMessage(name: string, message: string) {
+async function back__sendBotMessage(name: string, message: string) {
   const res = await fetch(API_URL + `/bot-command`, {
     method: "POST",
     headers: {
@@ -81,6 +81,29 @@ async function sendBotMessage(name: string, message: string) {
       command: message
     })
   });
+}
+
+async function sendBotMessage(
+  name: string, 
+  message: string, 
+  files: File[] = []
+) {
+
+  const formData = new FormData();
+
+  // text fields
+  formData.append("name", name);
+  formData.append("command", message);
+
+  // file attachments (optional)
+  files.forEach(file => formData.append("files", file));
+
+  const res = await fetch(API_URL + `/bot-command`, {
+    method: "POST",
+    body: formData // no headers needed — browser sets boundary
+  });
+
+  return await res.json();
 }
 
 async function fetchMessages(name: string, limit: number, offset: number) {

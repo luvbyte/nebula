@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Query, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, Query, WebSocket, WebSocketDisconnect, UploadFile, File, Form
+from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
@@ -48,14 +49,13 @@ def bot_file(name: str, path: str):
   return FileResponse(nebula.get_bot_filepath(name, path))
 
 
-class BotCommand(BaseModel):
-  name: str
-  command: str
-
-
 @server.post("/bot-command")
-async def bot(payload: BotCommand):
-  await nebula.run(payload.name, payload.command)
+async def bot(
+  name: str = Form(...),
+  command: str = Form(...),
+  files: List[UploadFile] = File(None)   # optional
+):
+  await nebula.run(name, command, files)
   return { "res": "ok" }
 
 

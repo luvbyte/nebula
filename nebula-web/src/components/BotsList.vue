@@ -12,9 +12,9 @@
         <img :src="bot.icon" />
       </div>
       <!-- body -->
-      <div class="flex-1 flex flex-col ">
+      <div class="flex-1 flex flex-col">
         <div class="capitalize truncate">{{ bot.title }}</div>
-        <div v-if="bot.last.message" class="text-xs opacity-60 line-clamp-2">
+        <div v-if="bot.last?.message" class="text-xs opacity-60 line-clamp-2">
           {{ resolveMessage(bot) }}
         </div>
       </div>
@@ -41,7 +41,7 @@
   const bots = ref([]);
 
   function resolveMessage(bot) {
-    if (!bot.last.message) return "";
+    if (!bot.last?.message) return "";
 
     const finalCheck = msg => {
       if (bot.last.self) return "You: " + msg;
@@ -52,6 +52,8 @@
     switch (bot.last.type) {
       case "image":
         return finalCheck("Sent a photo");
+      case "chart":
+        return finalCheck("Sent chart message");
       default:
         return finalCheck(bot.last.message);
     }
