@@ -80,6 +80,12 @@ class Bot:
   async def on_close(self):
     await self.core.on_close()
   
+  # Clear messages
+  def clear_messages(self):
+    self.messages.clear()
+    self.unread_count = 0
+    self.messages_count = 0
+  
   # base event emiter
   async def send_event(self, event, payload):
     await self.broadcast({
@@ -149,13 +155,24 @@ class Bot:
       raise e # for debug 
       print("Got Error: ", e)
   
+  def _get_background_url(self):
+    background = self.config_dict.get("background")
+
+    if background is None:
+      return None
+
+    file_path = (self.path / "public" / background).resolve()
+    if not file_path.is_file():
+      return None
+
+    return f"/bot-file/{self.name}/{background}"
+  
   # Returns bot config
   def get_config(self):
     return {
       "autocomplete": self.config_dict["commands"],
       "files": self.config_dict["files"],
-      # Static for now
-      "background": "http://localhost:8000/static/background.jpg"
+      "background": self._get_background_url()
     }
 
   # Bot meta details

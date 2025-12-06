@@ -29,3 +29,10 @@ def is_safe_path(base, path):
   target = Path(path).resolve()
 
   return target.is_relative_to(base)
+
+
+def mkdir(path):
+  path = Path(path)
+  path.mkdir(exist_ok=True)
+
+  return path

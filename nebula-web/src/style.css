@@ -4,6 +4,21 @@
 }
 
 
+.base-border {
+  @apply border border-base-content/20
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE & Edge */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+
 /* Fade-in animation */
 .fade-in {
   opacity: 0;

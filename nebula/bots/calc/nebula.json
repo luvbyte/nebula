@@ -1,7 +1,0 @@
-{
-  "title": "calculator",
-  "files": {
-    "accept": "*/*",
-    "multiple": true
-  }
-}

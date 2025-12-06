@@ -1,5 +1,30 @@
+import Toastify from "toastify-js";
+// import "toastify-js/src/toastify.css";
+
+export function toast(message, tp = "success") {
+  if (!message || message === "") return;
+
+  const styles = {
+    success: "linear-gradient(to right, #00b09b, #96c93d)",
+    error: "linear-gradient(to right, #f85032, #e73827)",
+    warning: "linear-gradient(to right, #f7971e, #ffd200)",
+    info: "linear-gradient(to right, #2193b0, #6dd5ed)"
+  };
+
+  Toastify({
+    text: message.toString(),
+    duration: 2000,
+    gravity: "bottom",
+    position: "center",
+    stopOnFocus: true,
+    style: {
+      background: styles[tp] || styles.info
+    }
+  }).showToast();
+}
+
 export function formatTimestamp(timestamp) {
-  if(!timestamp) return ""
+  if (!timestamp) return "";
   const now: any = new Date();
   const date: any = new Date(timestamp);
 

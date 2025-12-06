@@ -4,8 +4,9 @@
   import Navbar from "@/components/Navbar.vue";
   import BotsList from "@/components/BotsList.vue";
   import AddBot from "@/components/AddBot.vue";
+  import Sidebar from "@/components/Sidebar.vue";
 
-  import { connect } from "@/api";
+  import { connect } from "@/api/ws";
 
   import { Icon } from "@iconify/vue";
 
@@ -35,13 +36,7 @@
 
     <!-- sidebar -->
     <Transition name="slide-right">
-      <div
-        v-if="showSidebar"
-        @click="showSidebar = false"
-        class="fixed top-0 left-0 w-full h-full"
-      >
-        <div class="w-[80%] h-full bg-base-200 shadow-xl"></div>
-      </div>
+      <Sidebar v-show="showSidebar" :close="() => (showSidebar = false)" />
     </Transition>
 
     <!-- fab -->

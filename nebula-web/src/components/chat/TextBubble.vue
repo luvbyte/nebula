@@ -7,7 +7,7 @@
         : 'bg-info text-info-content rounded-bl-none shadow-lg glass'
     "
   >
-    <div class="text-lg">
+    <div class="text-lg break-words whitespace-break-spaces">
       {{ message.message }}
     </div>
     <!--

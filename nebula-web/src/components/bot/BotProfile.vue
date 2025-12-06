@@ -10,10 +10,7 @@
       <div
         class="w-[50%] bg-secondary/60 p-4 rounded-full border-4 border-secondary overflow-hidden"
       >
-        <img
-          class="rounded-full shadow-2xl"
-          :src="activeBot.icon"
-        />
+        <img class="rounded-full shadow-2xl" :src="activeBot.icon" />
       </div>
 
       <div class="flex flex-col items-center justify-center">
@@ -26,9 +23,11 @@
       </div>
     </div>
 
+    <div class="divider m-0 mx-2"></div>
+
     <div class="p-2 flex gap-2 items-center px-4 rounded active:bg-base-300">
       <Icon icon="solar:wallpaper-outline" width="26" height="26" />
-      <h1 class="text-lg">Theme</h1>
+      <h1 class="text-lg">Background</h1>
     </div>
   </div>
 </template>

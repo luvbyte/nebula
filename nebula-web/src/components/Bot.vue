@@ -15,10 +15,20 @@
     <Transition name="fade">
       <div
         v-if="showChatMenu"
-        @click="showChatMenu = false"
+        @click.self="showChatMenu = false"
         class="fixed w-full h-full z-[20] inset-0"
       >
-        <ChatMenu @click.stop />
+        <div
+          class="absolute right-4 top-18 bg-base-100 text-base-content min-w-42 p-2 rounded"
+        >
+          <button
+            @click="clearChat"
+            class="flex gap-4 items-center rounded p-2 w-full active:bg-base-300 transition duration-300"
+          >
+            <Icon icon="hugeicons:clean" width="28" height="28" />
+            <h1>Clear chat</h1>
+          </button>
+        </div>
       </div>
     </Transition>
 
@@ -49,9 +59,9 @@
     <!-- body -->
     <div class="relative flex-1 flex flex-col overflow-hidden">
       <!-- background -->
-      <img
-        class="absolute inset-0 -z-20 w-full h-full object-cover"
-        :src="botConfig.background"
+      <Background
+        v-if="botConfig.background"
+        :background="resolveBackgroundURL(botConfig.background)"
       />
       <div
         ref="chatRef"
@@ -147,26 +157,28 @@
 <script setup lang="ts">
   import {
     ref,
+    nextTick,
     onMounted,
     onBeforeMount,
-    onBeforeUnmount,
-    nextTick
+    onBeforeUnmount
   } from "vue";
 
+  import { onBotMessage, offBotMessage, sendEvent } from "@/api/ws";
   import {
     sendBotMessage,
     fetchMessages,
-    onBotMessage,
-    offBotMessage,
     getBotConfig,
-    sendEvent
-  } from "@/api";
+    clearBotMessages,
+    resolveBackgroundURL
+  } from "@/api/bot";
 
   import Bubble from "@/components/chat/Bubble.vue";
-  import ChatMenu from "@/components/ChatMenu.vue";
-  import InputCommands from "@/components/InputCommands.vue";
-  import BotProfile from "@/components/BotProfile.vue";
-  import InputOptionsPanel from "@/components/InputOptionsPanel.vue";
+
+  import InputCommands from "@/components/bot/InputCommands.vue";
+  import BotProfile from "@/components/bot/BotProfile.vue";
+  import InputOptionsPanel from "@/components/bot/InputOptionsPanel.vue";
+
+  import Background from "@/components/chat/Background.vue";
 
   import { Icon } from "@iconify/vue";
 
@@ -204,6 +216,19 @@
 
   function safeGetFiles() {
     return inputOptionsPanelRef.value?.getFiles?.() ?? [];
+  }
+
+  // Clear chat
+  async function clearChat() {
+    showChatMenu.value = false;
+
+    try {
+      const data = await clearBotMessages(props.activeBot.name);
+      console.log(data);
+      messages.value = [];
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   // send measage

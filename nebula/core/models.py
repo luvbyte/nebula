@@ -11,11 +11,10 @@ class CommandGroup(BaseModel):
   subcommands: Dict[str, Subcommand] = {}
 
 
-Commands = Optional[Dict[str, CommandGroup]]
-
 class Files(BaseModel):
   accept: str = "*/*"  # accept all files
   multiple: bool = False
+
 
 class BotConfig(BaseModel):
   # Title 
@@ -25,7 +24,11 @@ class BotConfig(BaseModel):
   btype: Literal["sbot", "mbot"] = Field("sbot", description="Bot module type")
 
   # bot commands / autocomplete / suggestions
-  commands: Commands = Field(None)
-  
+  commands: Optional[Dict[str, CommandGroup]] = None
+
+  # Allow files input 
   files: Optional[Files] = None
+
+  # Chat background
+  background: Optional[str] = None
 
